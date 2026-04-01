@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "2026 Q2 Operating Review",
+    "subtitle": "Regional Performance Snapshot",
+    "author": "My Agent Tools",
+    "company": "FrontPro",
+    "language": "zh-CN",
+    "ratio": "16:9"
+  },
+  "theme": {
+    "name": "corporate-clean"
+  },
+  "constraints": {
+    "max_slides": 10,
+    "require_speaker_notes": true,
+    "max_text_line_units_per_slide": 12,
+    "max_chars_per_text_slide": 520,
+    "max_table_rows_per_slide": 8
+  },
+  "slides": [
+    {
+      "title": "2026 Q2 Operating Review",
+      "subtitle": "Regional Performance Snapshot",
+      "kind": "title",
+      "speaker_notes": "Open with the top-line result and frame the rest of the deck around three decisions."
+    },
+    {
+      "title": "Agenda",
+      "subtitle": "What this review covers",
+      "kind": "section",
+      "speaker_notes": "Move quickly through the agenda. This deck is designed for a 12-minute update."
+    },
+    {
+      "title": "Executive Summary",
+      "kind": "content",
+      "blocks": [
+        {
+          "type": "bullet_list",
+          "items": [
+            "Revenue increased by 18% quarter over quarter.",
+            "Store productivity improved in East and Central regions.",
+            "Refund rate fell by 1.2 percentage points after the checkout revision."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The next priority is to standardize the stronger in-store workflow and reduce training variance."
+        }
+      ],
+      "speaker_notes": "Emphasize that the strongest gain came from operational consistency rather than one-time demand spikes."
+    },
+    {
+      "title": "What Changed",
+      "kind": "two_column",
+      "blocks": [
+        {
+          "type": "bullet_list",
+          "items": [
+            "Checkout flow reduced to four steps.",
+            "Regional managers received weekly exception reports.",
+            "New SKU bundle tested in 38 pilot stores."
+          ]
+        },
+        {
+          "type": "bullet_list",
+          "items": [
+            "Average queue time dropped to 2.8 minutes.",
+            "Stockout alerts were resolved 31% faster.",
+            "Pilot bundle lifted basket size by 6%."
+          ]
+        }
+      ],
+      "speaker_notes": "Left column is operational change. Right column is the measurable outcome."
+    },
+    {
+      "title": "Headline Metrics",
+      "kind": "metrics",
+      "blocks": [
+        {
+          "type": "metrics",
+          "metrics": [
+            {
+              "label": "Revenue",
+              "value": "¥18.4M",
+              "delta": "+18%"
+            },
+            {
+              "label": "Gross Margin",
+              "value": "34.2%",
+              "delta": "+2.1pt"
+            },
+            {
+              "label": "Refund Rate",
+              "value": "1.9%",
+              "delta": "-1.2pt"
+            }
+          ]
+        }
+      ],
+      "speaker_notes": "Call out the margin improvement and refund reduction together to show better unit economics."
+    },
+    {
+      "title": "Regional Breakdown",
+      "kind": "table",
+      "blocks": [
+        {
+          "type": "table",
+          "columns": ["Region", "Revenue", "QoQ", "Margin"],
+          "rows": [
+            ["East", "¥6.8M", "+21%", "36.1%"],
+            ["Central", "¥4.5M", "+17%", "33.4%"],
+            ["South", "¥4.1M", "+14%", "32.8%"],
+            ["North", "¥3.0M", "+11%", "30.2%"]
+          ]
+        }
+      ],
+      "speaker_notes": "North still underperforms on margin and needs focused store coaching."
+    },
+    {
+      "title": "Channel Trend",
+      "kind": "chart",
+      "blocks": [
+        {
+          "type": "chart",
+          "chart": {
+            "chart_type": "column_clustered",
+            "title": "Quarterly Revenue by Channel",
+            "categories": ["直营", "经销", "线上", "团购"],
+            "series": [
+              {
+                "name": "Q1",
+                "values": [3.2, 2.4, 1.8, 0.9]
+              },
+              {
+                "name": "Q2",
+                "values": [3.8, 2.9, 2.6, 1.2]
+              }
+            ]
+          }
+        }
+      ],
+      "speaker_notes": "Online and group buying are still smaller channels, but they are growing faster than direct stores."
+    },
+    {
+      "title": "Next Quarter Focus",
+      "kind": "closing",
+      "blocks": [
+        {
+          "type": "bullet_list",
+          "items": [
+            "Scale the checkout workflow to all stores.",
+            "Codify manager exception handling into SOP.",
+            "Expand bundle program after margin review."
+          ]
+        }
+      ],
+      "speaker_notes": "Close on three concrete actions, not a generic summary."
+    }
+  ]
+}

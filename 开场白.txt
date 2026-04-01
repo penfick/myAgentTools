@@ -1,0 +1,15 @@
+继续 D:\sourcePro\frontPro\myAgentTools 这个项目。
+  请先读取 docs/project-status.md 和 docs/session-notes-2026-03-30.md，
+  然后读取 docs/architecture.md、src/my_agent_tools/desktop_app.py、
+  src/my_agent_tools/tools/ppt.py、src/my_agent_tools/specs.py。
+  今天继续优先推进 PPT 完善路线，不要先做 MD/HTML。
+
+
+继续 D:\sourcePro\frontPro\myAgentTools 这个项目。
+  请先读取 AGENTS.md、docs/project-status.md、docs/architecture.md、
+  src/my_agent_tools/desktop_app.py、src/my_agent_tools/app_settings.py、
+  src/my_agent_tools/openai_planner.py。
+  今天继续优先推进 PPT 路线和模型确认交互，不做 MD/HTML。
+
+
+codex resume 019d3ccb-54ac-7190-8710-e5c437a74db7

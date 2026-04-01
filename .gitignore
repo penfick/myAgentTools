@@ -1,0 +1,15 @@
+.pytest_cache/
+.tmp/
+__pycache__/
+*.py[cod]
+*.pyo
+
+.venv/
+venv/
+
+out/
+config/desktop_settings.json
+
+src/*.egg-info/
+src/my_agent_tools.egg-info/
+*.egg-info/
