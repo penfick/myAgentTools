@@ -1,140 +1,118 @@
 # My Agent Tools
 
-Python-first local agent toolchain scaffold. The architecture is organized around:
+本项目是一个以 `PPT` 生成为核心的本地 Agent 工具链。当前路线很明确：
 
-- a shared deck/document schema,
-- deterministic local tools,
-- a PPT-first renderer implemented with `python-pptx`,
-- extension points for future Markdown and HTML generators.
+- 先把 `PPT` 生成做扎实
+- 用本地可控工具完成渲染
+- 用 `LLM` 负责规划与确认，不直接生成最终文件
+- 后续再扩展 `MD / HTML / 搜索增强`
 
-## Current state
+## Current Focus
 
-- `PPT` generation is implemented and usable.
-- Template-config-driven PPT rendering is supported.
-- A confirmation-first AI planning workflow is available in the desktop GUI.
-- `Markdown` and `HTML` generators are defined as stubs so the interface is stable before those features are added.
-- `CLI` entrypoints are included for local execution.
+当前已经可用的主链路：
 
-## Project layout
+`用户需求 -> AI 生成大纲 -> 用户补充/确认 -> AI 生成 DeckSpec -> 本地渲染 PPT`
+
+当前能力包括：
+
+- `python-pptx` 本地渲染 `.pptx`
+- `DeckSpec` / `SlideSpec` / `BlockSpec` 结构化模型
+- 图表、表格、双栏、指标、封面、章节、结尾等页面类型
+- 文本续页、表格分页、模板映射
+- 本地桌面 GUI
+- 第三方 OpenAI 兼容 `API Base URL / API Key`
+- `Responses API` 优先，失败后自动回退 `Chat Completions`
+- 确认式 AI 工作流，不允许一键盲生成最终 PPT
+
+## Project Layout
 
 ```text
 myAgentTools/
-  examples/
-    sample_deck.json
-    default_template_config.json
-  src/
-    my_agent_tools/
-      cli.py
-      ai_models.py
-      openai_planner.py
-      specs.py
-      template_config.py
-      themes.py
-      tools/
-        base.py
-        html.py
-        md.py
-        ppt.py
-  tests/
-    test_specs.py
+  docs/                 项目文档与会话记录
+  examples/             示例 JSON 与模板配置
+  src/my_agent_tools/   主代码
+    tools/ppt.py        PPT 渲染器
+    desktop_app.py      本地桌面界面
+    openai_planner.py   LLM 规划层
+    specs.py            共享数据结构
+  tests/                pytest 测试
+  launch_gui.pyw        GUI 启动入口
 ```
 
-## Quick start
+## Quick Start
 
-1. Install the package in editable mode:
+安装依赖：
 
 ```powershell
 pip install -e .[dev]
 ```
 
-2. Render the sample PPT:
+运行测试：
+
+```powershell
+python -m pytest
+```
+
+生成示例 PPT：
 
 ```powershell
 python -m my_agent_tools.cli render-ppt --spec .\examples\sample_deck.json --output .\out\sample_deck.pptx
 ```
 
-3. Inspect the generated presentation under `out/sample_deck.pptx`.
-
-Optional: render with the built-in template mapping config:
-
-```powershell
-python -m my_agent_tools.cli render-ppt --spec .\examples\sample_deck.json --output .\out\sample_deck_v3.pptx --template-config .\examples\default_template_config.json
-```
-
-4. Launch the desktop GUI:
+启动桌面界面：
 
 ```powershell
 pythonw .\launch_gui.pyw
 ```
 
-Or just double-click `launch_gui.bat`.
+或者直接双击 `launch_gui.bat`。
 
-## Desktop GUI
+## Desktop Workflow
 
-The local desktop interface supports:
+桌面界面当前推荐这样用：
 
-- entering natural-language requirements,
-- configuring `Model`, `API Base URL`, and `API Key`,
-- choosing interface presets and saving planner settings locally,
-- generating an AI outline first,
-- asking the user for clarifications before deck generation,
-- showing pending clarification questions in the GUI and writing an answer template back into the feedback box,
-- confirming or editing the outline before final spec generation,
-- loading the sample deck spec,
-- opening and saving JSON specs,
-- editing deck JSON directly,
-- validating the spec,
-- browsing slides from a left-side outline,
-- previewing the selected slide in a native desktop window,
-- generating a `.pptx` file from the current editor content.
+1. 在 `AI 规划` 页填写“用户需求”
+2. 配置 `Model`、`API Base URL`、`API Key`
+3. 点击“生成大纲”
+4. 如果 AI 提出追问，在“待确认问题”查看，并把答复写入“补充说明 / 用户修正”
+5. 点击“结合补充重生成大纲”
+6. 确认大纲后，点击“确认大纲并生成规格”
+7. 检查 `DeckSpec JSON`
+8. 最后再点击“生成 PPT”
 
-## AI workflow
+## Architecture Rules
 
-The desktop GUI now follows a confirmation-first sequence:
+- `PPT` 是当前最高优先级，不先扩散到 `MD / HTML`
+- `LLM` 只负责规划，不直接生成最终 PPT 文件
+- AI 输出必须先过结构化校验，再进入渲染器
+- 布局逻辑必须在本地代码里，不放在 prompt 里赌结果
+- GUI 流程必须保持“先确认，后生成”
 
-1. Enter the user's requirement in the `AI 规划` tab.
-2. Fill `API Key`, and optionally fill `API Base URL`, or set `OPENAI_API_KEY` / `OPENAI_BASE_URL`.
-3. Optionally choose an interface preset and save the planner settings.
-4. Click `生成大纲`.
-5. If the model asks clarification questions, review them in the pending-questions area, write answers into `补充说明 / 用户修正`, and click `结合补充重生成大纲`.
-6. Review or edit the outline JSON manually if needed.
-7. Click `确认大纲并生成规格`.
-8. Review the generated spec and only then click `生成 PPT`.
+## Tests
 
-Default AI model:
+当前测试覆盖：
 
-- `gpt-5-mini`
+- schema 校验
+- PPT 渲染
+- planner 回退逻辑
+- desktop settings 持久化
 
-You can override it in the GUI model field.
+运行：
 
-API compatibility notes:
+```powershell
+python -m pytest
+```
 
-- The planner tries OpenAI `Responses API` first.
-- If the target provider only supports OpenAI-compatible `Chat Completions`, it will automatically fall back.
-- This makes third-party OpenAI-compatible gateways easier to use through `API Base URL`.
+## Notes
 
-## Design principles
+- 本地敏感配置在 `config/desktop_settings.json`
+- 如果勾选“记住 API Key”，该文件会以本地明文方式保存 key
+- 生成产物默认输出到 `out/`
 
-- LLMs should produce structured specs, not raw slide coordinates.
-- The renderer owns layout decisions, theme enforcement, and file generation.
-- Future generators should reuse the same high-level content schema where possible.
-- When precision matters, theme and layout policies should be encoded in code and template assets instead of prompts.
+## Next
 
-## PPT roadmap
+下一阶段优先做：
 
-The current renderer already supports:
-
-- title, section, content, two-column, metrics, table, chart, and closing slides,
-- speaker notes,
-- theme-driven typography and colors,
-- optional `.pptx` template loading,
-- optional layout and placeholder mapping from JSON config,
-- automatic text continuation and table pagination,
-- JSON-based deck specs.
-
-The next PPT upgrades should focus on:
-
-- brand-template onboarding,
-- richer image fitting policies,
-- more precise measured layout fitting,
-- brand asset packs and logos.
+- 更好的确认式 AI 交互
+- 更稳定的 PPT 排版质量
+- 更强的模板适配能力
